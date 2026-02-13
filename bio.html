@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M0DZN | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Importing 'Inter' for the UI text and 'Orbitron' for the logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #050505;
+            --bg-card: #0a0a0a;
+            --border-color: #222;
+            --text-main: #ffffff;
+            --text-sub: #888888;
+            --accent-glow: rgba(255, 255, 255, 0.15);
+            --card-hover-border: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top center, #111 0%, #050505 60%);
+        }
+
+        /* Subtle grid pattern overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Main Layout Container */
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-img-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            /* Keeping the profile color as requested */
+            border: 2px solid #333;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            border-color: #fff;
+        }
+
+        .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            cursor: default;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-name:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .tagline {
+            color: var(--text-sub);
+            font-size: 1rem;
+            font-weight: 600; /* Made slightly bolder */
+            letter-spacing: 2px; /* Added spacing for impact */
+            text-transform: uppercase;
+        }
+
+        /* Grid Layout for Links */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 Columns */
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Card Style - Updated for no description */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px; /* Increased padding */
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centered content */
+            justify-content: center; /* Centered content */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            min-height: 160px; /* Taller for a substantial look */
+        }
+
+        .card-icon {
+            font-size: 2.5rem; /* Larger Icon */
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        .card-title {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hover Effects */
+        .card:hover {
+            border-color: var(--card-hover-border);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.1);
+            background-color: #0f0f0f;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1);
+            opacity: 1;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.6);
+        }
+
+        /* Arrow Icon (top right) */
+        .card::after {
+            content: '\f061'; /* FontAwesome arrow right */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #444;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr; /* Stack vertically on mobile */
+            }
+            .brand-name {
+                font-size: 2.5rem;
+            }
+            .dashboard-container {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="profile-img-container">
+                <img src="https://github.com/m0dzn1/Html-website-test/blob/main/channels4_profile.jpg?raw=true" alt="Profile" class="profile-img">
+            </div>
+            <h1 class="brand-name">M0DZN</h1>
+            <p class="tagline">SUBSCRIBE AND FOLLOW</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="grid-container">
+            
+            <!-- YouTube Card -->
+            <a href="https://www.youtube.com/@m0dzn_edit" target="_blank" class="card">
+                <i class="fab fa-youtube card-icon"></i>
+                <div class="card-title">YouTube Channel</div>
+            </a>
+
+            <!-- TikTok Card -->
+            <a href="https://www.tiktok.com/@m0dzn_edit" target="_blank" class="card">
+                <i class="fab fa-tiktok card-icon"></i>
+                <div class="card-title">TikTok</div>
+            </a>
+
+            <!-- Discord Card -->
+            <a href="https://discord.gg/E4NR8TSAKr" target="_blank" class="card">
+                <i class="fab fa-discord card-icon"></i>
+                <div class="card-title">Discord Server</div>
+            </a>
+
+            <!-- GitHub Card -->
+            <a href="https://github.com/m0dzn1" target="_blank" class="card">
+                <i class="fab fa-github card-icon"></i>
+                <div class="card-title">GitHub</div>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
